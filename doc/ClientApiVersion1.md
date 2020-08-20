@@ -20,7 +20,7 @@ all methods defined in this interface are implemented by all client classes.
 
 ```typescript
 interface ISearchClientV1 {
-    getRecords(correlationId: string, filter: FilterParams, paging: PagingParams, callback: (err: any, result: DataPage<SearchRecordV1>) => void): void;
+    getRecords(correlationId: string, filter: FilterParams, paging: PagingParams, sort: SortParams, callback: (err: any, result: DataPage<SearchRecordV1>) => void): void;
     getRecordById(correlationId: string, recordId: string, callback: (err: any, result: SearchRecordV1) => void): void;
     setRecord(correlationId: string, record: SearchRecordV1, callback: (err: any, result: SearchRecordV1) => void): void;
     updateRecord(correlationId: string, record: SearchRecordV1, callback: (err: any, result: SearchRecordV1) => void): void;
@@ -38,7 +38,6 @@ Get search records by filter
   - id: string - (optional) unique retry id
   - type: string - (optional) record type
   - subtype: string - (optional) record sub type
-  - description: string - (optional) record description
   - fromTime: Date - (optional) the start date of the range for the time field
   - toTime: Date - (optional) end date range for time field
   - field1: string - (optional) record field1
@@ -52,6 +51,8 @@ Get search records by filter
 - paging: PagingParams - paging parameters
   - skip: int - (optional) start of page (default: 0). Operation returns paged result
   - take: int - (optional) page length (max: 100). Operation returns paged result
+
+- sort: SortParams - sorting parameters
 
 **Returns:**
 - err: Error - occured error or null for success
@@ -115,7 +116,7 @@ class SearchHttpClientV1 extends CommandableHttpClient implements ISearchClientV
     setReferences(references);
     open(correlationId, callback);
     close(correlationId, callback);
-    getRecords(correlationId: string, filter: FilterParams, paging: PagingParams, callback: (err: any, result: DataPage<SearchRecordV1>) => void): void;
+    getRecords(correlationId: string, filter: FilterParams, paging: PagingParams, sort: SortParams, callback: (err: any, result: DataPage<SearchRecordV1>) => void): void;
     getRecordById(correlationId: string, recordId: string, callback: (err: any, result: SearchRecordV1) => void): void;
     setRecord(correlationId: string, record: SearchRecordV1, callback: (err: any, result: SearchRecordV1) => void): void;
     updateRecord(correlationId: string, record: SearchRecordV1, callback: (err: any, result: SearchRecordV1) => void): void;
@@ -140,7 +141,7 @@ class SearchDirectClientV1 extends DirectClient<any> implements ISearchClientV1 
     setReferences(references);
     open(correlationId, callback);
     close(correlationId, callback);
-    getRecords(correlationId: string, filter: FilterParams, paging: PagingParams, callback: (err: any, result: DataPage<SearchRecordV1>) => void): void;
+    getRecords(correlationId: string, filter: FilterParams, paging: PagingParams, sort: SortParams, callback: (err: any, result: DataPage<SearchRecordV1>) => void): void;
     getRecordById(correlationId: string, recordId: string, callback: (err: any, result: SearchRecordV1) => void): void;
     setRecord(correlationId: string, record: SearchRecordV1, callback: (err: any, result: SearchRecordV1) => void): void;
     updateRecord(correlationId: string, record: SearchRecordV1, callback: (err: any, result: SearchRecordV1) => void): void;
@@ -156,7 +157,7 @@ It can be useful in testing scenarios to cut dependencies on external microservi
 ```typescript
 class SearchNullClientV1 implements ISearchClientV1 {
     constructor();
-    getRecords(correlationId: string, filter: FilterParams, paging: PagingParams, callback: (err: any, result: DataPage<SearchRecordV1>) => void): void;
+    getRecords(correlationId: string, filter: FilterParams, paging: PagingParams, sort: SortParams, callback: (err: any, result: DataPage<SearchRecordV1>) => void): void;
     getRecordById(correlationId: string, recordId: string, callback: (err: any, result: SearchRecordV1) => void): void;
     setRecord(correlationId: string, record: SearchRecordV1, callback: (err: any, result: SearchRecordV1) => void): void;
     updateRecord(correlationId: string, record: SearchRecordV1, callback: (err: any, result: SearchRecordV1) => void): void;

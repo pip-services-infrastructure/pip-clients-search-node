@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const pip_services3_commons_node_1 = require("pip-services3-commons-node");
 class SearchNullClientV1 {
     constructor(config) { }
-    getRecords(correlationId, filter, paging, callback) {
+    getRecords(correlationId, filter, paging, sort, callback) {
         callback(null, new pip_services3_commons_node_1.DataPage());
     }
     getRecordById(correlationId, recordId, callback) {

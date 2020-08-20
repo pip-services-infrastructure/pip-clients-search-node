@@ -65,4 +65,8 @@ suite('SearchCommandableHttpServiceV1', () => {
     test('Get with Filters', (done) => {
         fixture.testGetWithFilters(done);
     });
+    
+    test('Sorting', (done) => {
+        fixture.testSorting(done);
+    });
 });

@@ -51,7 +51,7 @@
         "@types/node": "*",
         "chai": "*",
         "mocha": "^7.0.0",
-        "pip-services-search-node": "https://github.com/pip-services-integration/pip-services-search-node.git",
+        "pip-services-search-node": "git+https://github.com/pip-services-integration/pip-services-search-node.git",
         "restify": "^4.3.0"
     }
 }

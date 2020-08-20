@@ -48,4 +48,8 @@ suite('SearchDirectClientV1', () => {
         fixture.testGetWithFilters(done);
     });
 
+    test('Sorting', (done) => {
+        fixture.testSorting(done);
+    });
+
 });

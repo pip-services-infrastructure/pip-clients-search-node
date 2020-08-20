@@ -1,6 +1,6 @@
 import { ISearchClientV1 } from './ISearchClientV1';
 import { DirectClient } from 'pip-services3-rpc-node';
-import { Descriptor, FilterParams, PagingParams, DataPage } from 'pip-services3-commons-node';
+import { Descriptor, FilterParams, PagingParams, DataPage, SortParams } from 'pip-services3-commons-node';
 import { SearchRecordV1 } from './SearchRecordV1';
 
 
@@ -11,10 +11,10 @@ export class SearchDirectClientV1 extends DirectClient<any> implements ISearchCl
         this._dependencyResolver.put('controller', new Descriptor('pip-services-search', 'controller', '*', '*', '1.0'));
     }
 
-    getRecords(correlationId: string, filter: FilterParams, paging: PagingParams,
+    getRecords(correlationId: string, filter: FilterParams, paging: PagingParams, sort: SortParams,
         callback: (err: any, result: DataPage<SearchRecordV1>) => void): void {
         let timing = this.instrument(correlationId, 'search.get_records');
-        this._controller.getRecords(correlationId, filter, paging, (err, result) => {
+        this._controller.getRecords(correlationId, filter, paging, sort, (err, result) => {
             timing.endTiming();
             callback(err, result);
         });

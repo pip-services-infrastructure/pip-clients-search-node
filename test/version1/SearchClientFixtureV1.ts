@@ -2,7 +2,7 @@ let _ = require('lodash');
 let async = require('async');
 let assert = require('chai').assert;
 
-import { PagingParams, FilterParams } from 'pip-services3-commons-node';
+import { PagingParams, FilterParams, SortParams, SortField } from 'pip-services3-commons-node';
 
 import { SearchRecordV1 } from '../../src/version1/SearchRecordV1';
 import { ISearchClientV1 } from '../../src/version1/ISearchClientV1';
@@ -90,6 +90,7 @@ export class SearchClientFixtureV1 {
                     null,
                     new FilterParams(),
                     new PagingParams(),
+                    new SortParams(),
                     (err, page) => {
                         assert.isNull(err);
 
@@ -171,6 +172,7 @@ export class SearchClientFixtureV1 {
                         'id', '1'
                     ),
                     new PagingParams(),
+                    new SortParams(),
                     (err, page) => {
                         assert.isNull(err);
 
@@ -188,6 +190,7 @@ export class SearchClientFixtureV1 {
                         'type', 'Test type1'
                     ),
                     new PagingParams(),
+                    new SortParams(),
                     (err, page) => {
                         assert.isNull(err);
 
@@ -205,6 +208,7 @@ export class SearchClientFixtureV1 {
                         'name', 'Test name 1'
                     ),
                     new PagingParams(),
+                    new SortParams(),
                     (err, page) => {
                         assert.isNull(err);
 
@@ -222,6 +226,7 @@ export class SearchClientFixtureV1 {
                         'search', 'type1'
                     ),
                     new PagingParams(),
+                    new SortParams(),
                     (err, page) => {
                         assert.isNull(err);
 
@@ -239,6 +244,7 @@ export class SearchClientFixtureV1 {
                         'tags', ['red']
                     ),
                     new PagingParams(),
+                    new SortParams(),
                     (err, page) => {
                         assert.isNull(err);
 
@@ -257,11 +263,66 @@ export class SearchClientFixtureV1 {
                         'to_time', new Date(2015, 1, 1),
                     ),
                     new PagingParams(),
+                    new SortParams(),
                     (err, page) => {
                         assert.isNull(err);
 
                         assert.lengthOf(page.data, 1);
 
+                        callback();
+                    }
+                )
+            },
+        ], done);
+    }
+
+    
+    public testSorting(done) {
+        async.series([
+            // Create items
+            (callback) => {
+                this.testCreateSearch(callback);
+            },
+            (callback) => {
+                setTimeout(() => {
+                    callback();
+                }, this._timeout);
+            },
+            // Sort by type
+            (callback) => {
+                this._client.getRecords(
+                    null,
+                    new FilterParams(),
+                    new PagingParams(),
+                    new SortParams(new SortField('type', true)),
+                    (err, page) => {
+                        assert.isNull(err);
+
+                        assert.lengthOf(page.data, 3);
+
+                        assert.equal(page.data[0].id, '1');
+                        assert.equal(page.data[1].id, '3');
+                        assert.equal(page.data[2].id, '2');
+
+                        callback();
+                    }
+                )
+            },
+            // Sort by time
+            (callback) => {
+                this._client.getRecords(
+                    null,
+                    new FilterParams(),
+                    new PagingParams(),
+                    new SortParams(new SortField('time', true)),
+                    (err, page) => {
+                        assert.isNull(err);
+
+                        assert.lengthOf(page.data, 3);
+
+                        assert.equal(page.data[0].id, '2');
+                        assert.equal(page.data[1].id, '1');
+                        assert.equal(page.data[2].id, '3');
                         callback();
                     }
                 )

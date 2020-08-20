@@ -7,10 +7,11 @@ class SearchHttpClientV1 extends pip_services3_rpc_node_1.CommandableHttpClient 
     constructor() {
         super('v1/search');
     }
-    getRecords(correlationId, filter, paging, callback) {
+    getRecords(correlationId, filter, paging, sort, callback) {
         this.callCommand('get_records', correlationId, {
             filter: filter,
-            paging: paging
+            paging: paging,
+            sort: sort
         }, (err, page) => {
             if (page == null || page.data.length == 0) {
                 callback(err, page);

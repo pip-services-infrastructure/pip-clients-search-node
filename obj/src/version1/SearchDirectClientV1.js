@@ -7,9 +7,9 @@ class SearchDirectClientV1 extends pip_services3_rpc_node_1.DirectClient {
         super();
         this._dependencyResolver.put('controller', new pip_services3_commons_node_1.Descriptor('pip-services-search', 'controller', '*', '*', '1.0'));
     }
-    getRecords(correlationId, filter, paging, callback) {
+    getRecords(correlationId, filter, paging, sort, callback) {
         let timing = this.instrument(correlationId, 'search.get_records');
-        this._controller.getRecords(correlationId, filter, paging, (err, result) => {
+        this._controller.getRecords(correlationId, filter, paging, sort, (err, result) => {
             timing.endTiming();
             callback(err, result);
         });
